@@ -36,11 +36,13 @@ steps:
   displayName: terraform plan -out=tfplan
   inputs:
     #provider: 'azurerm'
+    backendType: azurerm
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
     commandOptions: '-out=tfplan'
     # commandOptions: '-detailed-exitcode -out=tfplan'
     environmentServiceNameAzureRM: 'AKSTerraform'
+    terraformVersion: 0.12.6
 
 - task: PowerShell@2
   displayName: detect any terraform change
@@ -67,6 +69,8 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'apply'
+    backendType: azurerm
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
     commandOptions: 'tfplan'
     environmentServiceNameAzureRM: 'AKSTerraform'
+    terraformVersion: 0.12.6
