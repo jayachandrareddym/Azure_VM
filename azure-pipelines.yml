@@ -15,9 +15,9 @@ variables:
 steps:
 
 - task: TerraformInstaller@0
-  displayName: install Terraform v1.1.1
+  displayName: install Terraform v1.0.0
   inputs:
-    terraformVersion: '1.1.1'
+    terraformVersion: '1.0.0'
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform init
@@ -25,12 +25,12 @@ steps:
     provider: 'azurerm'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
-    backendServiceArm: 'AKSTerraform'
     backendType: azurerm
-    backendAzureRmResourceGroupName: '$(resourceGroup)'
-    backendAzureRmStorageAccountName: '$(storageAccount)'
-    backendAzureRmContainerName: '$(container)'
-    backendAzureRmKey: '$(tfstateFile)'
+    backendAzureRmResourceGroupName: 'AksTerraform-RG'
+    backendAzureRmStorageAccountName: 'jayaaksterraform'
+    backendAzureRmContainerName: 'tfstate'
+    backendAzureRmKey: 'terraform-dev.tfstate'
+    environmentServiceNameAzureRM: 'AKSTerraform'
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform plan -out=tfplan
@@ -40,7 +40,7 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
     commandOptions: '-out=tfplan'
     # commandOptions: '-detailed-exitcode -out=tfplan'
-    environmentServiceNameAzureRM: '$(subscription)'
+    environmentServiceNameAzureRM: 'AKSTerraform'
 
 - task: PowerShell@2
   displayName: detect any terraform change
@@ -69,4 +69,4 @@ steps:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
     commandOptions: 'tfplan'
-    environmentServiceNameAzureRM: '$(subscription)'
+    environmentServiceNameAzureRM: 'AKSTerraform'
