@@ -4,6 +4,7 @@ terraform {
     azurerm = {
       source = "hashicorp/azurerm"
       version = ">= 2.0" # Optional but recommended in productions
+      features {}
     }
   }
  backend "azurerm" {
@@ -12,8 +13,4 @@ terraform {
     container_name        = "tfstate"
     key                   = "terraform-dev.tfstate"
   }
-}
-provider "azurerm" {
-  version = "2.0.0"
-features {}
 }
