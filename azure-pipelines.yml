@@ -23,6 +23,7 @@ steps:
   displayName: terraform init
   inputs:
     provider: 'azurerm'
+    backendServiceArm: 'AKSTerraform'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
     backendType: azurerm
@@ -30,7 +31,6 @@ steps:
     backendAzureRmStorageAccountName: 'jayaaksterraform'
     backendAzureRmContainerName: 'tfstate'
     backendAzureRmKey: 'terraform-dev.tfstate'
-    environmentServiceNameAzureRM: 'AKSTerraform'
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform plan -out=tfplan
