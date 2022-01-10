@@ -4,7 +4,7 @@ terraform {
     azurerm = {
       source = "hashicorp/azurerm"
       version = ">= 2.0" # Optional but recommended in productions
-      features {}
+      features{}
     }
   }
  backend "azurerm" {
