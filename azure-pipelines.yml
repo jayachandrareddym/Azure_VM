@@ -19,7 +19,7 @@ steps:
   inputs:
     terraformVersion: '0.12.28'
 
-- task: TerraformTaskV1@0
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform init
   inputs:
     provider: 'azurerm'
@@ -31,7 +31,7 @@ steps:
     backendAzureRmContainerName: '$(container)'
     backendAzureRmKey: '$(tfstateFile)'
 
-- task: TerraformTaskV1@0
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform plan -out=tfplan
   inputs:
     provider: 'azurerm'
@@ -60,7 +60,7 @@ steps:
       {
         Write-Host "There is no change detected in Terraform tfplan file"
       }
-- task: TerraformTaskV1@0
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform apply tfplan
   condition: eq(variables.anyTfChanges, true)
   inputs:
