@@ -1,7 +1,3 @@
-provider "azurerm" {
-    features {}
-}
-
 terraform {
   required_version = ">= 1.0.0"
   required_providers {
@@ -16,6 +12,10 @@ terraform {
     container_name        = "tfstate"
     key                   = "terraform-dev.tfstate"
   }
+}
+
+provider "azurerm" {
+    features {}
 }
 
 variable "prefix" {
