@@ -22,7 +22,7 @@ steps:
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform init
   inputs:
-    provider: 'azurerm'
+    #provider: 'azurerm'
     backendServiceArm: 'azvm'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
