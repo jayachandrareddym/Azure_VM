@@ -1,5 +1,4 @@
 azure_region = "EastUS"
 resource_group = "AksTerraform-RG"
-acr_name = "AKSTerraform-ACR"
 keyvault_rg = "AksTerraform-RG"
 keyvault_name = "jayaakskeyvault"
