@@ -35,8 +35,8 @@ steps:
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform plan -out=tfplan
   inputs:
-    #provider: 'azurerm'
-    backendType: azurerm
+    provider: 'azurerm'
+    #backendType: azurerm
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
     commandOptions: '-out=tfplan'
