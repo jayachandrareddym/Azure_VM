@@ -5,11 +5,6 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  subscription: Visual Studio Professional Subscription(d27e7e46-ee4b-4636-a893-80884653852d)
-  resourceGroup: AksTerraform-RG
-  storageAccount: jayaaksterraform
-  container: tfstate
-  tfstateFile: terraform-dev.tfstate
   anyTfChanges: false
 
 steps:
