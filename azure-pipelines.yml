@@ -16,11 +16,6 @@ steps:
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform init
-  env:
-    ARM_SUBSCRIPTION_ID: "d27e7e46-ee4b-4636-a893-80884653852d"
-    ARM_CLIENT_ID: "ca2129a7-26c7-4b22-b0ed-3852fef37e74"
-    ARM_CLIENT_SECRET: "8a59cc04-9494-473c-b528-c2f5d45664d5"
-    ARM_TENANT_ID: "b41b72d0-4e9f-4c26-8a69-f949f367c91d"
   inputs:
     #provider: 'azurerm'
     backendServiceArm: 'azvm'
@@ -34,11 +29,6 @@ steps:
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform plan -out=tfplan
-  env:
-    ARM_SUBSCRIPTION_ID: "d27e7e46-ee4b-4636-a893-80884653852d"
-    ARM_CLIENT_ID: "ca2129a7-26c7-4b22-b0ed-3852fef37e74"
-    ARM_CLIENT_SECRET: "8a59cc04-9494-473c-b528-c2f5d45664d5"
-    ARM_TENANT_ID: "b41b72d0-4e9f-4c26-8a69-f949f367c91d"
   inputs:
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
@@ -70,11 +60,6 @@ steps:
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform apply tfplan
   condition: eq(variables.anyTfChanges, true)
-  env:
-    ARM_SUBSCRIPTION_ID: "d27e7e46-ee4b-4636-a893-80884653852d"
-    ARM_CLIENT_ID: "ca2129a7-26c7-4b22-b0ed-3852fef37e74"
-    ARM_CLIENT_SECRET: "8a59cc04-9494-473c-b528-c2f5d45664d5"
-    ARM_TENANT_ID: "b41b72d0-4e9f-4c26-8a69-f949f367c91d"
   inputs:
     provider: 'azurerm'
     command: 'apply'
