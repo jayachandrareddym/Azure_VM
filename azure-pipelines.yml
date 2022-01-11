@@ -32,7 +32,7 @@ steps:
   inputs:
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
-    #secureVarsFile: 'aks_conf.tfvars'
+    secureVarsFile: 'vm_terraform.tfvars'
     commandOptions: '-out=tfplan'
     # commandOptions: '-detailed-exitcode -out=tfplan'
     environmentServiceNameAzureRM: 'AKSTerraform'
