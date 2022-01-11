@@ -15,9 +15,9 @@ variables:
 steps:
 
 - task: TerraformInstaller@0
-  displayName: install Terraform v2.91.0
+  displayName: install Terraform v1.1.1
   inputs:
-    terraformVersion: '2.91.0'
+    terraformVersion: '1.1.1'
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: terraform init
@@ -42,7 +42,7 @@ steps:
     commandOptions: '-out=tfplan'
     # commandOptions: '-detailed-exitcode -out=tfplan'
     environmentServiceNameAzureRM: 'AKSTerraform'
-    terraformVersion: 2.91.0
+    terraformVersion: 1.1.1
 
 - task: PowerShell@2
   displayName: detect any terraform change
@@ -73,4 +73,4 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
     commandOptions: 'tfplan'
     environmentServiceNameAzureRM: 'AKSTerraform'
-    terraformVersion: 2.91.0
+    terraformVersion: 1.1.1
