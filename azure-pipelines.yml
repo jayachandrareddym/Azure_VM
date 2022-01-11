@@ -23,7 +23,7 @@ steps:
   displayName: terraform init
   inputs:
     provider: 'azurerm'
-    backendServiceArm: 'AKSTerraform'
+    backendServiceArm: 'azvm'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
     backendType: azurerm
