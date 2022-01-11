@@ -35,7 +35,7 @@ steps:
     secureVarsFile: 'vm_terraform.tfvars'
     commandOptions: '-out=tfplan'
     # commandOptions: '-detailed-exitcode -out=tfplan'
-    environmentServiceNameAzureRM: 'AKSTerraform'
+    environmentServiceNameAzureRM: 'azvm'
     terraformVersion: 1.1.1
 
 - task: PowerShell@2
@@ -66,5 +66,5 @@ steps:
     backendType: azurerm
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
     commandOptions: 'tfplan'
-    environmentServiceNameAzureRM: 'AKSTerraform'
+    environmentServiceNameAzureRM: 'azvm'
     terraformVersion: 1.1.1
