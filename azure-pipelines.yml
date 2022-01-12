@@ -7,72 +7,73 @@ pool:
 variables:
   anyTfChanges: false
 
-    steps:
-    - task: TerraformInstaller@0
-      displayName: install Terraform v1.1.1
-      inputs:
-        terraformVersion: '1.1.1'
+steps:
+- task: TerraformInstaller@0
+  displayName: install Terraform v1.1.1
+  inputs:
+    terraformVersion: '1.1.1'
 
-    - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-      displayName: terraform init
-      inputs:
-        #provider: 'azurerm'
-        backendServiceArm: 'azvm'
-        command: 'init'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
-        backendType: azurerm
-        backendAzureRmResourceGroupName: 'AksTerraform-RG'
-        backendAzureRmStorageAccountName: 'jayaaksterraform'
-        backendAzureRmContainerName: 'tfstate'
-        backendAzureRmKey: 'terraform-dev.tfstate'
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: terraform init
+  inputs:
+    #provider: 'azurerm'
+    backendServiceArm: 'azvm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
+    backendType: azurerm
+    backendAzureRmResourceGroupName: 'AksTerraform-RG'
+    backendAzureRmStorageAccountName: 'jayaaksterraform'
+    backendAzureRmContainerName: 'tfstate'
+    backendAzureRmKey: 'terraform-dev.tfstate'
 
-    - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-      displayName: terraform plan -out=tfplan
-      inputs:
-        command: 'plan'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
-        secureVarsFile: 'vm_terraform.tfvars'
-        commandOptions: '-out=tfplan'
-        # commandOptions: '-detailed-exitcode -out=tfplan'
-        environmentServiceNameAzureRM: 'azvm'
-        terraformVersion: 1.1.1
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: terraform plan -out=tfplan
+  inputs:
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
+    secureVarsFile: 'vm_terraform.tfvars'
+    commandOptions: '-out=tfplan'
+    # commandOptions: '-detailed-exitcode -out=tfplan'
+    environmentServiceNameAzureRM: 'azvm'
+    terraformVersion: 1.1.1
 
-    - task: PowerShell@2
-      displayName: detect any terraform change
-      inputs:
-        workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
-        targetType: 'inline'
-        script: |
-          # Write-Host "LASTEXITCODE : $LASTEXITCODE"
-          $plan = $(terraform show -json tfplan | ConvertFrom-Json)
-          $actions = $plan.resource_changes.change.actions
-          Write-Host "Terraform actions : $actions"
-          if (($actions -contains 'create') -or ($actions -contains 'delete') -or ($actions -contains 'update'))
-          {
-            Write-Host "Terraform will perform the following actions : $actions"
-            Write-Host "##vso[task.setvariable variable=anyTfChanges;]true"
-          }
-          else
-          {
-            Write-Host "There is no change detected in Terraform tfplan file"
-          }
-    - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-      displayName: terraform apply tfplan
-      condition: eq(variables.anyTfChanges, true)
-      inputs:
-        provider: 'azurerm'
-        command: 'apply'
-        backendType: azurerm
-        workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
-        commandOptions: 'tfplan'
-        environmentServiceNameAzureRM: 'azvm'
-        terraformVersion: 1.1.1
-    - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-      displayName: terraform destroy 
-      inputs:
-        provider: 'azurerm'
-        command: 'destroy'
-        backendType: azurerm
-        workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
-        environmentServiceNameAzureRM: 'azvm'
-        terraformVersion: 1.1.1
+- task: PowerShell@2
+  displayName: detect any terraform change
+  inputs:
+    workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
+    targetType: 'inline'
+    script: |
+      # Write-Host "LASTEXITCODE : $LASTEXITCODE"
+      $plan = $(terraform show -json tfplan | ConvertFrom-Json)
+      $actions = $plan.resource_changes.change.actions
+      Write-Host "Terraform actions : $actions"
+      if (($actions -contains 'create') -or ($actions -contains 'delete') -or ($actions -contains 'update'))
+      {
+        Write-Host "Terraform will perform the following actions : $actions"
+        Write-Host "##vso[task.setvariable variable=anyTfChanges;]true"
+      }
+      else
+      {
+        Write-Host "There is no change detected in Terraform tfplan file"
+      }
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: terraform apply tfplan
+  condition: eq(variables.anyTfChanges, true)
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    backendType: azurerm
+    workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
+    commandOptions: 'tfplan'
+    environmentServiceNameAzureRM: 'azvm'
+    terraformVersion: 1.1.1
+
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: terraform destroy 
+  inputs:
+    provider: 'azurerm'
+    command: 'destroy'
+    backendType: azurerm
+    workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
+    environmentServiceNameAzureRM: 'azvm'
+    terraformVersion: 1.1.1
