@@ -4,15 +4,10 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-stages:
-- stage: Validate
-  jobs: 
-  - job: Validate
-    steps:
-    variables:
-      anyTfChanges: false
+variables:
+  anyTfChanges: false
 
-    #steps:
+    steps:
     - task: TerraformInstaller@0
       displayName: install Terraform v1.1.1
       inputs:
@@ -61,10 +56,6 @@ stages:
           {
             Write-Host "There is no change detected in Terraform tfplan file"
           }
-- stage: Deploy
-  jobs: 
-  - job: Deploy
-    steps:
     - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
       displayName: terraform apply tfplan
       condition: eq(variables.anyTfChanges, true)
@@ -76,11 +67,6 @@ stages:
         commandOptions: 'tfplan'
         environmentServiceNameAzureRM: 'azvm'
         terraformVersion: 1.1.1
-
-- stage: Delete
-  jobs: 
-  - job: Delete
-    steps:
     - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
       displayName: terraform destroy 
       inputs:
