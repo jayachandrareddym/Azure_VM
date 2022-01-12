@@ -76,4 +76,8 @@ steps:
     backendType: azurerm
     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
     environmentServiceNameAzureRM: 'azvm'
+<<<<<<< HEAD
     terraformVersion: 1.1.1
+=======
+    terraformVersion: 1.1.1
+>>>>>>> 7bc1f4b00f9a589a0ac76de92b69a96e84d95259
