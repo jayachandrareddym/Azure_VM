@@ -68,11 +68,11 @@ steps:
     environmentServiceNameAzureRM: 'azvm'
     terraformVersion: 1.1.1
  - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-  displayName: terraform destroy 
-  inputs:
-    provider: 'azurerm'
-    command: 'destroy'
-    backendType: azurerm
-    workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
-    environmentServiceNameAzureRM: 'azvm'
-    terraformVersion: 1.1.1
+   displayName: terraform destroy 
+   inputs:
+     provider: 'azurerm'
+     command: 'destroy'
+     backendType: azurerm
+     workingDirectory: '$(System.DefaultWorkingDirectory)/az-vm'
+     environmentServiceNameAzureRM: 'azvm'
+     terraformVersion: 1.1.1
